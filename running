@@ -1,0 +1,115 @@
+import cv2 
+import numpy as np
+import os
+import serial
+import time
+import keras
+from pyfirmata import Arduino,util
+
+
+board = Arduino('/dev/ttyACM0')                  // same address as used during collecting data
+
+pin5=board.get_pin('d:5:p')
+pin6=board.get_pin('d:6:p')
+pin9=board.get_pin('d:9:p')
+pin10=board.get_pin('d:10:p')
+
+
+cap = cv2.VideoCapture(0)
+
+training_data = []
+
+from keras.models import load_model
+model = load_model("/home/pi/Downloads/output.h4")        // address of output file , which comes after running training code in google collab
+
+def testModel(c):                     // c stores the outuput from trained model, and tells where to move
+    
+            
+    if c==0:                          
+        pin5.write(1)                 // numbers in bracket control the speed of motor , so change it accordingly.
+        pin6.write(0)
+        pin9.write(0)
+        pin10.write(0.3)
+      
+        print('right \n')
+        return i
+        
+    if c==1:
+        pin5.write(0.3)
+        pin6.write(0)
+        pin9.write(0)
+        pin10.write(1)
+     
+        print('left \n')
+        return i
+        
+    if c==2:
+        pin5.write(1)
+        pin6.write(0)
+        pin9.write(0)
+        pin10.write(1)
+     
+        print('forward \n')
+        return i
+        
+     if c==3:
+        pin5.write(0)
+        pin6.write(1)
+        pin9.write(0)
+        pin10.write(1)
+     
+        print('extreme left \n')
+        return i
+    
+     if c==4:
+        pin5.write(1)
+        pin6.write(0)
+        pin9.write(1)
+        pin10.write()
+     
+        print('extreme right \n')
+        return i
+   
+i=1
+ans=1
+x=60
+y=420
+while ans:
+    if i:
+        ret, img = cap.read()
+        img = cv2.flip(img,-1)
+        cv2.imshow('image',img)
+        img1 = cv2.resize(img, (128,128))
+        img1 =np.array(img1).astype('float32')/255.
+        img1= np.expand_dims(img1, axis = 0)
+        
+        k = cv2.waitKey(1)
+           
+        if k==113:                  // if q is pressed bot stops.
+            pin5.write(0)
+            pin6.write(0)
+            pin9.write(0)
+            pin10.write(0)
+            print('closing.. \n')
+           
+            break
+        
+        c = model.predict_classes(img1)
+  
+        img = img[x:y,:]
+        if ret:
+            i = testModel(c)
+        else:
+            break
+    else:
+        break 
+                
+
+del(cap)
+
+cv2.destroyAllWindows()
+            
+                            
+ 
+
+

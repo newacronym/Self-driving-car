@@ -35,10 +35,10 @@ while True:
         cv2.imwrite(os.path.join(left,'opencv' +str(i)+'.png'),image)
         
         print('left')
-        pin5.write(0.2)
+        pin5.write(0.1)
         pin6.write(0)
         pin9.write(0)
-        pin10.write(0.8)
+        pin10.write(0.5)
         i+=1
        
     if k==ord('d'):                     // if 'd' is pressed bot moves right and stores the corresponding image in folder called 'right'
@@ -47,10 +47,10 @@ while True:
         cv2.imwrite(os.path.join(right,'opencv' +str(i)+'.png'),image)
         
         print('right')
-        pin5.write(0.8)
+        pin5.write(0.5)                // speed of bot can be controlled by altering the value of motor from 0 to 1 ie. min to max
         pin6.write(0)
         pin9.write(0)
-        pin10.write(0.2)
+        pin10.write(0.1)
         i+=1
        
     if k==ord('q'):                   // for quitting the loop and bot stops permenanetly.
@@ -73,19 +73,19 @@ while True:
         cv2.imwrite(os.path.join(forward,'opencv' +str(i)+'.png'),image)
      
         print('forward')
-        pin5.write(0.8)
+        pin5.write(0.5)
         pin6.write(0)
         pin9.write(0)
-        pin10.write(0.8)
+        pin10.write(0.5)
         i+=1
         
      if k==ord('p  '):                   // for extreme right
         cv2.imwrite(os.path.join(forward,'opencv' +str(i)+'.png'),image)
      
         print('turn_right')
-        pin5.write(0.8)
+        pin5.write(0.5)
         pin6.write(0)
-        pin9.write(0.8)
+        pin9.write(0.5)
         pin10.write(0)
         i+=1  
         
@@ -94,9 +94,9 @@ while True:
      
         print('turn_left')
         pin5.write(0)
-        pin6.write(0.8)
+        pin6.write(0.5)
         pin9.write(0)
-        pin10.write(0.8)
+        pin10.write(0.5)
         i+=1
         
 camera.release()

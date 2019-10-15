@@ -35,10 +35,10 @@ while True:
         cv2.imwrite(os.path.join(left,'opencv' +str(i)+'.png'),image)
         
         print('left')
-        pin3.write(0.2)
-        pin4.write(0)
-        pin5.write(0)
-        pin6.write(0.8)
+        pin5.write(0.2)
+        pin6.write(0)
+        pin9.write(0)
+        pin10.write(0.8)
         i+=1
        
     if k==ord('d'):                     // if 'd' is pressed bot moves right and stores the corresponding image in folder called 'right'
@@ -47,56 +47,56 @@ while True:
         cv2.imwrite(os.path.join(right,'opencv' +str(i)+'.png'),image)
         
         print('right')
-        pin3.write(0.8)
-        pin4.write(0)
-        pin5.write(0)
-        pin6.write(0.2)
+        pin5.write(0.8)
+        pin6.write(0)
+        pin9.write(0)
+        pin10.write(0.2)
         i+=1
        
     if k==ord('q'):                   // for quitting the loop and bot stops permenanetly.
         print('close')
-        pin3.write(0)
-        pin4.write(0)
         pin5.write(0)
         pin6.write(0)
+        pin9.write(0)
+        pin10.write(0)
         break
     if k==ord('z'):                   // bot pauses and stops moving and taking pictures
         
         
-        pin3.write(0)
-        pin4.write(0)
         pin5.write(0)
         pin6.write(0)
+        pin9.write(0)
+        pin10.write(0)
  
     
     if k==ord('w'):                   // for forward motion
         cv2.imwrite(os.path.join(forward,'opencv' +str(i)+'.png'),image)
      
         print('forward')
-        pin3.write(0.8)
-        pin4.write(0)
-        pin5.write(0)
-        pin6.write(0.8)
+        pin5.write(0.8)
+        pin6.write(0)
+        pin9.write(0)
+        pin10.write(0.8)
         i+=1
         
      if k==ord('p  '):                   // for extreme right
         cv2.imwrite(os.path.join(forward,'opencv' +str(i)+'.png'),image)
      
         print('turn_right')
-        pin3.write(0.8)
-        pin4.write(0)
         pin5.write(0.8)
         pin6.write(0)
+        pin9.write(0.8)
+        pin10.write(0)
         i+=1  
         
      if k==ord('o'):                   // for extreme left
         cv2.imwrite(os.path.join(forward,'opencv' +str(i)+'.png'),image)
      
         print('turn_left')
-        pin3.write(0)
-        pin4.write(0.8)
         pin5.write(0)
         pin6.write(0.8)
+        pin9.write(0)
+        pin10.write(0.8)
         i+=1
         
 camera.release()

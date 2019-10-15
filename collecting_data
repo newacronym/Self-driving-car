@@ -1,0 +1,104 @@
+import cv2
+import time
+import os
+import pyfirmata
+import matplotlib.image as img
+
+
+board = pyfirmata.Arduino('/dev/ttyACM0')             // board value can be accessed from arduino, arduino>>pin
+pin5 = board.get_pin('d:5:p')                         // pin no. are the number, in which your motor is connected in arduino port 
+pin6 = board.get_pin('d:6:p')                         // here pin 5 and 6 are for forward and 9 and 10 for controlling
+pin9 = board.get_pin('d:9:p')                         // backward motor
+pin10 = board.get_pin('d:10:p')
+camera =cv2.VideoCapture(0)
+i=0
+
+
+left='/home/pi/test/left1'
+right='/home/pi/test/right1'
+forward='/home/pi/test/forward1'
+turn_left ='/home/pi/test/turn_left'                 // for extreme left , you can add or remove it, according to your requirement
+turn_right='/home/pi/test/turn_right'
+
+
+
+while True:
+    
+    return_value, image = camera.read()
+    image=cv2.flip(image,-1)
+    cv2.imshow('image',image)
+
+    k =cv2.waitKey(1)                                         
+    
+    if k==ord('a'):                        // if 'a' is pressed bot moves left and stores the corresponding image in folder called 'left'
+    
+        cv2.imwrite(os.path.join(left,'opencv' +str(i)+'.png'),image)
+        
+        print('left')
+        pin3.write(0.2)
+        pin4.write(0)
+        pin5.write(0)
+        pin6.write(0.8)
+        i+=1
+       
+    if k==ord('d'):                     // if 'd' is pressed bot moves right and stores the corresponding image in folder called 'right'
+    
+        
+        cv2.imwrite(os.path.join(right,'opencv' +str(i)+'.png'),image)
+        
+        print('right')
+        pin3.write(0.8)
+        pin4.write(0)
+        pin5.write(0)
+        pin6.write(0.2)
+        i+=1
+       
+    if k==ord('q'):                   // for quitting the loop and bot stops permenanetly.
+        print('close')
+        pin3.write(0)
+        pin4.write(0)
+        pin5.write(0)
+        pin6.write(0)
+        break
+    if k==ord('z'):                   // bot pauses and stops moving and taking pictures
+        
+        
+        pin3.write(0)
+        pin4.write(0)
+        pin5.write(0)
+        pin6.write(0)
+ 
+    
+    if k==ord('w'):                   // for forward motion
+        cv2.imwrite(os.path.join(forward,'opencv' +str(i)+'.png'),image)
+     
+        print('forward')
+        pin3.write(0.8)
+        pin4.write(0)
+        pin5.write(0)
+        pin6.write(0.8)
+        i+=1
+        
+     if k==ord('p  '):                   // for extreme right
+        cv2.imwrite(os.path.join(forward,'opencv' +str(i)+'.png'),image)
+     
+        print('turn_right')
+        pin3.write(0.8)
+        pin4.write(0)
+        pin5.write(0.8)
+        pin6.write(0)
+        i+=1  
+        
+     if k==ord('o'):                   // for extreme left
+        cv2.imwrite(os.path.join(forward,'opencv' +str(i)+'.png'),image)
+     
+        print('turn_left')
+        pin3.write(0)
+        pin4.write(0.8)
+        pin5.write(0)
+        pin6.write(0.8)
+        i+=1
+        
+camera.release()
+cv2.destroyAllWindows()
+   

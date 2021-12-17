@@ -50,6 +50,34 @@ print(y_test.shape)
 from keras.layers import Conv2D, MaxPooling2D, Dense, Dropout, BatchNormalization, Flatten
 from keras.models import Sequential
 
+model = Sequential()
+model.add(Conv2D(16 , kernel_size = (3,3) , strides = (2,2) , padding = 'same' , activation = 'relu', input_shape = (128,128,3)))
+model.add(MaxPooling2D(pool_size = (2,2)))  # 64x64x16
+model.add(BatchNormalization())
+
+model.add(Conv2D(32 , kernel_size = (3,3) , strides = (2,2) , padding = 'same' , activation = 'relu'))
+model.add(MaxPooling2D(pool_size = (2,2)))  # 32X32x32
+model.add(BatchNormalization())
+
+model.add(Conv2D(32 , kernel_size = (3,3) , strides = (2,2) , padding = 'same' , activation = 'relu'))
+model.add(MaxPooling2D(pool_size = (2,2)))  # 16x16x32
+model.add(BatchNormalization())
+
+model.add(Flatten())
+model.add(Dense(1024 , activation = 'relu'))
+model.add(Dropout(0.25))
+
+model.add(Dense(512 , activation = 'relu'))
+model.add(Dropout(0.25))
+
+model.add(Dense(256 , activation = 'relu'))
+model.add(Dropout(0.25))
+
+model.add(Dense(128 , activation = 'relu'))
+model.add(Dropout(0.25))
+
+model.add(Dense(6 , activation = 'sigmoid'))
+
 model.compile(loss = 'binary_crossentropy' , optimizer = 'adam', metrics = ['accuracy'])
 
 model.fit(X_train, y_train, epochs = 18, validation_split = 0.2, batch_size = 15)
